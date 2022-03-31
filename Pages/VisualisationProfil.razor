@@ -1,0 +1,39 @@
+﻿@attribute [Microsoft.AspNetCore.Components.RouteAttribute(UrlHelper.VISUALISATION_PROFIL + "/{ProfilId:int}")]
+
+@using Microsoft.EntityFrameworkCore
+@using FluentValidation
+@using System.Linq;
+@using System.Collections.Generic;
+
+@using Training.Helpers
+@using Training.Models
+@using Training.Services
+
+@inject NavigationManager navigationManager
+@inject Radzen.DialogService dialogService
+@inject ProfilService profilService
+
+<ProjectPageTitle Title="Visualisation du Profil" />
+
+<RadzenLinkButton class="bi-info-lg btn-primary" style="margin-right: 0.5rem;" Href="">Statistique</RadzenLinkButton>
+
+<RadzenLinkButton class="bi bi-pencil btn-primary" style="margin-right: 0.5rem;" Href="@UrlHelper.EditerProfil(ProfilId)">Modifier</RadzenLinkButton>
+
+<RadzenLinkButton Class="bi bi-trash btn-danger" style="margin-right: 0.5rem;" Href="@UrlHelper.SupprimerProfil(ProfilId)">Supprimer</RadzenLinkButton>
+
+<ProjectFieldset Title="Identification">
+    <div class="col-md-4">
+        <ProjectLabelVisu For="@(() => ProfilViewModel.Nom)" />
+        <ProjectDisplayValue For="@(() => ProfilViewModel.Nom)" />
+    </div>
+
+    <div class="col-md-4">
+        <ProjectLabelVisu For="@(() => ProfilViewModel.Prenom)" />
+        <ProjectDisplayValue For="@(() => ProfilViewModel.Prenom)" />
+    </div>
+
+    <div class="col-md-4">
+        <ProjectLabelVisu For="@(() => ProfilViewModel.EMail)" />
+        <ProjectDisplayValue For="@(() => ProfilViewModel.EMail)" />
+    </div>
+</ProjectFieldset>

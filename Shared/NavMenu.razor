@@ -1,0 +1,81 @@
+﻿@using Training.Helpers
+@using Microsoft.Extensions.Configuration
+
+
+@inject IConfiguration configuration
+@* <at> inject AssemblyInfo assemblyInfo *@
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">Training</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Accueil
+            </NavLink>
+        </li>
+        <!--li class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </li-->
+    </ul>
+
+    <a data-bs-toggle="collapse" href="#CollapseGestion" role="button" aria-expanded="false" aria-controls="CollapseGestion" class="collapsed">
+        <h3 class="nav-title px-3">Administration<i class="bi bi-caret-down-fill"></i></h3>
+        <img class="px-3" src="\img\separateur-menu-navigation.png" />
+    </a>
+    <ul class="nav collapse" >
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="@UrlHelper.TYPE_ACTIVITE">
+                Type Activité
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="@UrlHelper.PHASE_ACTIVITE">
+                Phase Activité
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="@UrlHelper.TYPE_EXERCICE">
+                Type Exercice
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="@UrlHelper.PROFIL_UTILISATEUR">
+                Profil
+            </NavLink>
+        </li>
+
+        @*            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="seeddb">
+                    Ajouter données (test)
+                </NavLink>
+            </li>*@
+    </ul>
+
+
+
+
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

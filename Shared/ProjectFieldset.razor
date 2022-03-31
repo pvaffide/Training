@@ -1,0 +1,19 @@
+﻿<div @attributes="AdditionalAttributes" class="row amande-fieldset">
+    <h3>@Title</h3>
+    <hr />
+    @Childcontent
+</div>
+
+
+
+@code {
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment Childcontent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
+}

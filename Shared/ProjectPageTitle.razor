@@ -1,0 +1,19 @@
+﻿<div class="row ProjectPageTitle">
+    <div class="col-12 title">
+        <div class="image-title"/>
+        <h1>@Title</h1>
+    </div>
+    <hr />
+</div>
+
+
+
+@code {
+
+    [Parameter]
+    public string Title { get; set; }
+
+   
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
+}

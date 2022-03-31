@@ -1,0 +1,89 @@
+﻿@page "/"
+@namespace Training.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+    Response.Headers["Cache-Control"] = "no-store";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Training</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="_content/Radzen.Blazor/css/default-base.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <link href="css/site.css" rel="stylesheet" />
+
+</head>
+<body>
+<script>
+    // fix radzen numeric filter crash on '.' input
+    ///*
+    document.body.addEventListener('keydown', (event) => {
+        let target = event.target;
+        if(!target.matches(".rz-grid-filter input[inputmode='decimal']") || event.keyCode == 39 || event.keyCode == 37)
+            return;
+        let val = target.value;
+        let c = event.key;
+        event.preventDefault();
+        let dlt = c == "Delete";
+        let bckspc = c == "Backspace";
+        if(c.length != 1 && !dlt && !bckspc)
+            return;
+        let newVal;
+        let s_start = target.selectionStart;
+        let s_end = target.selectionEnd;
+        let s_new;
+        if(!s_start && s_start != '0')
+            s_start = s_end;
+
+        if((dlt || bckspc) && s_start != s_end)
+        {
+            newVal = (val.substring(0, s_start) + val.substring(s_end, val.length));
+            s_new = s_start;
+        } else if (dlt) {
+            newVal = (val.substring(0, s_start) + val.substring(s_start + 1, val.length));
+            s_new = s_start;
+        } else if (bckspc){
+            newVal = (val.substring(0, s_start - 1) + val.substring(s_start, val.length));
+            s_new = Math.max(s_start-1, 0);
+        } else {
+            newVal = (val.substring(0, s_start) + c + val.substring(s_end, val.length));
+            s_new = s_start+1;
+        }
+        newVal = newVal.replace('.',',');
+        if(/^([0-9]+,?[0-9]*)?$/.test(newVal))
+        {
+            target.value = newVal;
+            target.selectionStart = s_new;
+            target.selectionEnd = s_new;
+            target.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+    });
+    //*/
+</script>
+
+    <app>
+        <component type="typeof(App)" render-mode="ServerPrerendered" />
+    </app>
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            Une erreur a été rencontrée, merci de cliquer de recharger pour continuer.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Recharger</a>
+    </div>
+
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

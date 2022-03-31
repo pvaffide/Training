@@ -1,0 +1,44 @@
+﻿@using Training.Services
+@using Training.Models
+@using Radzen
+@using Radzen.Blazor
+
+@inject ITrainingNotificationService notificationService
+
+@typeparam TItem
+
+<h3>@Title</h3>
+<RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Ajouter" Click="@InsertRow" />
+
+<RadzenDataGridA @ref="Grid" AllowFiltering="true" AllowPaging="true" PageSize="100" AllowSorting="true" EditMode="DataGridEditMode.Single" FilterMode="FilterMode.Simple"
+                 Data="@Items" TItem="TItem">
+    <Columns>
+        @Columns
+        @if (_isSoftDeletable)
+        {
+            <RadzenDataGridColumnA Width="50px" TItem="TItem" Property="Visible">
+                <Template Context="item">
+                    <BooleanDisplay Value="(item as SoftDeletable).Visible" />
+                </Template>
+                <EditTemplate Context="item">
+                    <RadzenSwitch @bind-Value="(item as SoftDeletable).Visible" Style="padding-top: 14px;" />
+                </EditTemplate>
+            </RadzenDataGridColumnA>
+        }
+        <RadzenDataGridColumn Width="50px" TItem="TItem" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+            <Template Context="item">
+                <RadzenButton Disabled="@(!IsEditable(item))" Icon="edit" Size="ButtonSize.Small" Click="@(_ => EditRow(item))">
+                </RadzenButton>
+            </Template>
+            <EditTemplate Context="item">
+                <RadzenButton Icon="save" Size="ButtonSize.Small" Click="@(_ => SaveRow(item))">
+                </RadzenButton>
+                <RadzenButton Icon="cancel" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Secondary" Click="@(_ => CancelEdit(item))">
+                </RadzenButton>
+            </EditTemplate>
+            <FooterTemplate>
+                <b>@Grid.View.Count()</b> / <b>@Items.Count()</b>
+            </FooterTemplate>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGridA>

@@ -1,0 +1,76 @@
+﻿@using Microsoft.EntityFrameworkCore;
+@using Training.Services
+@using Training.Shared
+@using Microsoft.Extensions.Configuration
+@using Radzen.Blazor
+
+@inherits LayoutComponentBase
+
+@inject IConfiguration configuration
+@inject IDbContextFactory<TrainingDbContext> dbContextFactory
+
+<RadzenDialog />
+<RadzenNotification />
+
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    <div class="top-row px-4" id="top-row" style="z-index: 10; padding: 0!important;">
+        <div class="top-row-title">
+            <h2>TR<span class="min-color">ai</span>NIN<span class="min-color">g</span></h2>
+            <p>
+                Gestion des Planning d'entrainement
+
+            </p>
+        </div>
+        <!--LoginDisplay /-->
+        <div class="insert @ContainerClass">
+            <span />
+            <img src="\img\separateur-insert.png">
+        </div>
+    </div>
+
+    <div class="content px-4">
+        <CascadingValue Value="this">
+            <div class="container-fluid @ContainerClass">@Body</div>
+        </CascadingValue>
+    </div>
+</div>
+
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    private string ContainerClass { get; set; }
+
+    private bool OnlySynchro { get; set; }
+
+    public void SetContainerClass(string classString)
+    {
+        ContainerClass = classString;
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+
+        OnlySynchro = false;
+        return;
+
+        var user = (await authenticationStateTask).User;
+
+        OnlySynchro = true;
+        return;
+
+        try
+        {
+            using var dbContext = dbContextFactory.CreateDbContext();
+        }
+        catch
+        { }
+    }
+}

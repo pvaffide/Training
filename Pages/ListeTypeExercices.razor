@@ -1,0 +1,21 @@
+﻿@attribute [Microsoft.AspNetCore.Components.RouteAttribute(UrlHelper.TYPE_EXERCICE)]
+
+@using Training.Helpers
+@using Training.Models
+
+@using Training.Services
+@using Microsoft.EntityFrameworkCore
+@using Radzen.Blazor
+
+@inject IDbContextFactory<TrainingDbContext> dbContextFactory
+
+<ReferenceGridEditor Items="@TypeExercices" TItem="TypeExercice" DbContext="dbContext"  Title="Type d'Exercice de l'entraînement">
+    <Columns>
+        <RadzenDataGridColumnA Width="150px" TItem="TypeExercice" Property="@(nameof(TypeExercice.Nom))">
+            <EditTemplate Context="typeExercice">
+                <RadzenTextBox @bind-Value="typeExercice.Nom" Style="width:100%; display: block;" />
+            </EditTemplate>
+        </RadzenDataGridColumnA>
+        
+    </Columns>
+</ReferenceGridEditor>

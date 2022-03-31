@@ -1,0 +1,24 @@
+﻿@inject NavigationManager navigationManager
+
+@if (!ForceNavigation)
+{
+    <a href="@Href" target="@(Download?"_top":(OpenInNewTab?"_blank":null))"
+       download="@Download"
+       class="btn rz-button rz-button-md amande-btn @Class @(Disabled?"disabled":"")"
+       role="button"
+       aria-disabled="@Disabled"
+       @attributes="AdditionalAttributes">
+        @ChildContent
+    </a>
+}
+else
+{
+    <a href="@Href"
+       class="btn rz-button rz-button-md amande-btn @Class @(Disabled?"disabled":"")"
+       role="button"
+       aria-disabled="@Disabled"
+       @onclick="ButtonClick"
+       @attributes="AdditionalAttributes">
+        @ChildContent
+    </a>
+}

@@ -1,0 +1,9 @@
+﻿@using System.Linq.Expressions
+@if (Raw)
+{
+    @FormattedValue
+}
+else
+{
+    <div @attributes="AdditionalAttributes">@FormattedValue</div>
+}

@@ -1,0 +1,42 @@
+﻿@attribute [Microsoft.AspNetCore.Components.RouteAttribute(UrlHelper.PROFIL_UTILISATEUR)]
+
+@using Microsoft.AspNetCore.Routing
+@using Microsoft.EntityFrameworkCore;
+
+@using Training.Helpers
+@using Training.Models
+@using Training.Services
+
+@inject LinkGenerator LinkGenerator
+@inject NavigationManager navigationManager
+@inject IDbContextFactory<TrainingDbContext> dbContextFactory
+
+    <ProjectPageTitle Title="Liste des Profils"></ProjectPageTitle>
+    <RadzenDataGridA AllowFiltering="true" AllowPaging="true" PageSize="50" AllowSorting="true" AllowColumnResize="true" Data="@profils" TItem="Profil">
+        <Columns>
+            <RadzenDataGridColumnA TItem="Profil" Property="@(nameof(Profil.Nom))" />
+            <RadzenDataGridColumnA TItem="Profil" Property="@(nameof(Profil.Prenom))" />
+            <RadzenDataGridColumnA TItem="Profil" Property="@(nameof(Profil.EMail))" />
+            <RadzenDataGridColumnA TItem="Profil" Property="@(nameof(Profil.Taille))" />
+            <RadzenDataGridColumnA TItem="Profil" Property="@(nameof(Profil.Poids))" />
+            <RadzenDataGridColumnA TItem="Profil" Property="@(nameof(Profil.VMA))" />
+            <RadzenDataGridColumnA TItem="Profil" Property="@(nameof(Profil.FTP))" />
+            <RadzenDataGridColumnA TItem="Profil" Property="@(nameof(Profil.FCMax))" />
+
+            <RadzenDataGridColumnA TItem="Profil" Filterable="false" Sortable="false" TextAlign="Radzen.TextAlign.Center" Width="120px" CssClass="button-column">
+                <Template Context="profil">
+                    <RadzenLinkButton Class="rz-button-sm btn-info rz-button-icon-only" Href="@UrlHelper.VisualisationProfil(profil.Id)">
+                        <i class="bi bi-eye"></i>
+                    </RadzenLinkButton>
+                    <RadzenLinkButton Class="rz-button-sm btn-primary rz-button-icon-only" Href="@UrlHelper.EditerProfil(profil.Id)">
+                        <i class="bi bi-pencil"></i>
+                    </RadzenLinkButton>
+                    <RadzenLinkButton Class="rz-button-sm btn-danger rz-button-icon-only" Href="@UrlHelper.SupprimerProfil(profil.Id)">
+                        <i class="bi bi-trash"></i>
+                    </RadzenLinkButton>
+                </Template>
+            </RadzenDataGridColumnA>
+        </Columns>
+    </RadzenDataGridA>
+
+
